@@ -362,8 +362,8 @@ endfunction
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function! ToggleNumbers()
-    if ( &number == 1 )
-        set nonumber
+    if ( &number == 1 || &relativenumber == 1)
+        set nonumber norelativenumber
     else
         set number
     endif
@@ -376,7 +376,7 @@ function! ToggleRelativeLineNumbers()
     if ( &relativenumber == 1 )
         set norelativenumber
     else
-        set relativenumber
+        set number relativenumber
     endif
 
 endfunction
@@ -484,7 +484,7 @@ set t_Co=256                   " Enable full-color support.
 " | Key Mappings                                                       |
 " ----------------------------------------------------------------------
 
-" Use a different mapleader (default is "\").
+" Use a different mapleader (default is ",").
 
 let mapleader = ","
 
