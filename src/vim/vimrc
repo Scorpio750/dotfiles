@@ -35,13 +35,13 @@ set cpoptions+=$               " When making a change, don't
                                " put a `$` sign at the end of
                                " the changed text.
 
-set colorcolumn=73             " Highlight certain column(s).
+"set colorcolumn=73             " Highlight certain column(s).
 set cursorline                 " Highlight the current line.
 set directory=~/.vim/swaps     " Set directory for swap files.
 set encoding=utf-8 nobomb      " Use UTF-8 without BOM.
 set history=5000               " Increase command line history.
 set hlsearch                   " Enable search highlighting.
-set ignorecase                 " Ignore case in search patterns.
+"set ignorecase                 " Ignore case in search patterns.
 
 set incsearch                  " Highlight search pattern
                                " as it is being typed.
@@ -134,7 +134,7 @@ filetype off
 
 " Include Vundle in the runtime path.
 
-set runtimepath+=~/.vim/plugins/Vundle.vim
+set runtimepath+=~/.vim/bundle/Vundle.vim
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -176,6 +176,7 @@ call vundle#begin("~/.vim/plugins")
     Plugin 'tpope/vim-surround'
     Plugin 'tpope/vim-unimpaired'
     Plugin 'wellle/targets.vim'
+    Plugin 'autowitch/hive.vim'
 
 call vundle#end()
 
@@ -360,10 +361,20 @@ endfunction
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+function! ToggleNumbers()
+    if ( &number == 1 )
+        set nonumber
+    else
+        set number
+    endif
+endfunction
+
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 function! ToggleRelativeLineNumbers()
 
     if ( &relativenumber == 1 )
-        set number
+        set norelativenumber
     else
         set relativenumber
     endif
@@ -420,7 +431,7 @@ if has("autocmd")
         " Automatically switch to absolute
         " line numbers when Vim is in insert mode.
 
-        autocmd InsertEnter * :set number
+        autocmd InsertEnter * :set norelativenumber number
 
         " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -468,23 +479,6 @@ endif
 
 set t_Co=256                   " Enable full-color support.
 
-set background=dark            " Use colors that look good
-                               " on a dark background.
-
-" Set custom configurations for when the
-" Solarized theme is used from Vim's Terminal mode.
-"
-" http://ethanschoonover.com/solarized/vim-colors-solarized#advanced-configuration
-
-if !has("gui_running")
-    let g:solarized_contrast = "high"
-    let g:solarized_termcolors = 256
-    let g:solarized_termtrans = 1
-    let g:solarized_visibility = "high"
-endif
-
-colorscheme solarized          " Use custom color scheme.
-
 
 " ----------------------------------------------------------------------
 " | Key Mappings                                                       |
@@ -507,6 +501,11 @@ nmap <leader>* :%s/\<<C-r><C-w>\>//<Left>
 
 map <leader>cc :TComment<CR>
 
+" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+" [,cp] Toggle absolute numbers for easier GUI copy-pasting
+
+map <leader>cp :call ToggleNumbers()<CR>
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 " [,cr] Calculate result.
@@ -553,9 +552,9 @@ nmap <leader>ss :call StripTrailingWhitespaces()<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-" [,t ] Toggle NERDTree.
+" [CTRL-n] Toggle NERDTree.
 
-map <leader>t :NERDTreeToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
 
 " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
